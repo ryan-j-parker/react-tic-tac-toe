@@ -3,20 +3,17 @@ import { GameContext } from '../../context/GameContext';
 import './Board.css';
 
 function Board() {
-
-  const { board } = useContext(GameContext);
+  const { board, setSpace } = useContext(GameContext);
 
   return (
     <>
       <div className="container">
         <div className="board">
-
           {board.map((box) => (
-            <div className="box" key={box}>
+            <div className="box" key={box.id} onClick={() => setSpace(box.id)}>
               {box.value}
             </div>
           ))}
-
         </div>
       </div>
     </>
