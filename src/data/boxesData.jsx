@@ -1,11 +1,11 @@
 export const boxes = [
   {
     id: '0',
-    value: '',
+    value: 'X',
   },
   {
     id: '1',
-    value: '',
+    value: 'O',
   },
   {
     id: '2',
