@@ -8,7 +8,10 @@ const GameContext = createContext();
 const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(boxes);
   const [player, setPlayer] = useState('X');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('Your turn, X');
+  const [click, setClick] = useState();
+
+  const [winner, setWinner] = useState(WinConditions);
 
   const setSpace = (id) => {
     setBoard((prevBoard) =>
@@ -16,7 +19,7 @@ const GameProvider = ({ children }) => {
     );
 
     setPlayer(player === 'X' ? 'O' : 'X');
-    setMessage(`Your turn, ${player}`);
+    setMessage(player === 'X' ? 'Your turn, O' : 'Your turn, X');
   };
 
   //   const message = (player) => {

@@ -10,7 +10,11 @@ function Board() {
       <div className="container">
         <div className="board">
           {board.map((box) => (
-            <div className="box" key={box.id} onClick={() => setSpace(box.id)}>
+            <div
+              className="box"
+              key={box.id}
+              onClick={box.value === '' ? () => setSpace(box.id) : null}
+            >
               {box.value}
             </div>
           ))}
