@@ -1,7 +1,6 @@
 import React, { createContext } from 'react';
 import { useState } from 'react';
 import { boxes } from '../data/boxesData';
-import { WinConditions } from '../data/winConditions';
 
 const GameContext = createContext();
 
@@ -9,11 +8,10 @@ const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(boxes);
   const [player, setPlayer] = useState('X');
   const [message, setMessage] = useState('Your turn, X');
-  const [click, setClick] = useState();
-
-  const [winner, setWinner] = useState(WinConditions);
+  const [active, setActive] = useState(true);
 
   const setSpace = (id) => {
+    if (!active) return;
     setBoard((prevBoard) =>
       prevBoard.map((box) => (box.id === id ? { ...box, value: player } : box))
     );
@@ -22,21 +20,56 @@ const GameProvider = ({ children }) => {
     setMessage(player === 'X' ? 'Your turn, O' : 'Your turn, X');
   };
 
-  //   const message = (player) => {
-  //     if (player === 'X') {
-  //       return 'Your turn, X';
-  //     } else if (player === 'O') {
-  //       return 'Your turn, O';
-  //     }
+  const winningGame = () => {
+    if (board[0].value === board[1].value && board[1].value === board[2].value) {
+      return board[0].value;
+    } else if (board[3].value === board[4].value && board[4].value === board[5].value) {
+      return board[3].value;
+    } else if (board[6].value === board[7].value && board[7].value === board[8].value) {
+      return board[6].value;
+    } else if (board[0].value === board[3].value && board[3].value === board[6].value) {
+      return board[0].value;
+    } else if (board[1].value === board[4].value && board[4].value === board[7].value) {
+      return board[1].value;
+    } else if (board[2].value === board[5].value && board[5].value === board[8].value) {
+      return board[2].value;
+    } else if (board[0].value === board[4].value && board[4].value === board[8].value) {
+      return board[0].value;
+    } else if (board[2].value === board[4].value && board[4].value === board[6].value) {
+      return board[2].value;
+    } else {
+      return null;
+    }
+  };
+
+  const resetGame = () => {
+    setBoard((prevBoard) => prevBoard.map((box) => ({ ...box, value: '' })));
+  };
+
+  //   const catsGame = () => {
+  //     return board.filter((box) => box.content === '').length === 0;
   //   };
+
+  const checkGame = () => {
+    if (!active) return;
+    const gameWinner = winningGame();
+    console.log(gameWinner);
+    if (gameWinner) {
+      setActive(false);
+      setMessage(`${gameWinner} wins!`);
+    } else {
+      return null;
+    }
+  };
+  checkGame();
 
   return (
     <GameContext.Provider
       value={{
         board,
         setSpace,
-        player,
         message,
+        resetGame,
       }}
     >
       {children}
