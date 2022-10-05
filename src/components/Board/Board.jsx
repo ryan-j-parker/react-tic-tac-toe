@@ -3,7 +3,7 @@ import { GameContext } from '../../context/GameContext';
 import './Board.css';
 
 function Board() {
-  const { board, setSpace, active, resetGame } = useContext(GameContext);
+  const { board, setSpace } = useContext(GameContext);
 
   return (
     <>
@@ -18,7 +18,6 @@ function Board() {
               {box.value}
             </div>
           ))}
-          {!active && <button onClick={() => resetGame()}>Play again</button>}
         </div>
       </div>
     </>

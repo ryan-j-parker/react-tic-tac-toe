@@ -1,18 +1,12 @@
-import { useContext } from 'react';
 import './App.css';
 import Board from './components/Board/Board';
-import { GameContext } from './context/GameContext';
+import Header from './components/Header';
 
 function App() {
-  const { message } = useContext(GameContext);
-
   return (
     <>
       <div className="App">
-        <div className="title">
-          <h1>Alchemy Tic-Tac-Toe</h1>
-          <h5>{message}</h5>
-        </div>
+        <Header />
         <Board />
       </div>
     </>

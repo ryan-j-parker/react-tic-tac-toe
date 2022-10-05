@@ -1,5 +1,4 @@
-import React, { createContext } from 'react';
-import { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { boxes } from '../data/boxesData';
 
 const GameContext = createContext();
@@ -7,7 +6,7 @@ const GameContext = createContext();
 const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(boxes);
   const [player, setPlayer] = useState('X');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("Let's play!");
   const [active, setActive] = useState(true);
 
   const setSpace = (id) => {
@@ -46,7 +45,8 @@ const GameProvider = ({ children }) => {
     setActive(false);
     setBoard((prevBoard) => prevBoard.map((box) => ({ ...box, value: '' })));
     setActive(true);
-    setMessage('');
+    setPlayer('X');
+    setMessage('Good luck!');
   };
 
   const catsGame = () => {
@@ -56,8 +56,6 @@ const GameProvider = ({ children }) => {
   const checkGame = () => {
     if (!active) return;
     const gameWinner = winningGame();
-
-    console.log(gameWinner);
     if (gameWinner) {
       setMessage(`${gameWinner} wins!`);
       setActive(false);
