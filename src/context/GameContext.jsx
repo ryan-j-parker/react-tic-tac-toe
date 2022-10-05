@@ -7,7 +7,7 @@ const GameContext = createContext();
 const GameProvider = ({ children }) => {
   const [board, setBoard] = useState(boxes);
   const [player, setPlayer] = useState('X');
-  const [message, setMessage] = useState('Your turn, X');
+  const [message, setMessage] = useState('');
   const [active, setActive] = useState(true);
 
   const setSpace = (id) => {
@@ -43,20 +43,27 @@ const GameProvider = ({ children }) => {
   };
 
   const resetGame = () => {
+    setActive(false);
     setBoard((prevBoard) => prevBoard.map((box) => ({ ...box, value: '' })));
+    setActive(true);
+    setMessage('');
   };
 
-  //   const catsGame = () => {
-  //     return board.filter((box) => box.content === '').length === 0;
-  //   };
+  const catsGame = () => {
+    return board.filter((box) => box.value === '').length === 0;
+  };
 
   const checkGame = () => {
     if (!active) return;
     const gameWinner = winningGame();
+
     console.log(gameWinner);
     if (gameWinner) {
-      setActive(false);
       setMessage(`${gameWinner} wins!`);
+      setActive(false);
+    } else if (catsGame()) {
+      setMessage("Cat's game!");
+      setActive(false);
     } else {
       return null;
     }
